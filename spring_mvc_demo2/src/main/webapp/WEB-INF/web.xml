@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+  <servlet>
+    <servlet-name>SpringMvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <!--    设置Springmvc的配置文件位置和文件名称-->
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:springmvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <!--
+    配置SpringMVC的前端控制器DispatcherServlet
+    SpringMVC的配置文件默认的位置和名称：
+    位置：WEB-INF下
+    名称：<servlet-name>-servlet.xml，当前配置下的配置文件名为SpringMVC-servlet.xml
+    url-pattern中/和/*的区别：
+    /：匹配浏览器向服务器发送的所有请求（不包括.jsp）
+    /*：匹配浏览器向服务器发送的所有请求（包括.jsp）
+    JspServlet的处理:是先将jsp翻译成所对应的servlet
+    然后再去访问servlet  把再把Jsp中所有的资源以响应的方式响应到浏览器
+    所以DispatcherServlet不能处理jsp文件
+-->
+  <servlet-mapping>
+    <!--    Default指的事tomcat中的web.xml中配置的servlet  用来处理我们项目中的静态资源   默认的servlet-->
+    <!--    这里应该和我们配置的servlet-name一致   所有的请求需要用配置的servlet来处理-->
+    <servlet-name>SpringMvc</servlet-name>
+    <!--    前端要处理的路径模型-->
+    <!--    在这里不能写/* 因为/默认匹配的不包含以.jsp结尾的文件-->
+    <!--    而/*却是可以包含对.jsp文件的处理-->
+    <!--    但是.jsp文件在tomcat中配置了默认的servlet来处理 就是JspServlet-->
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+</web-app>

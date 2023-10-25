@@ -1,0 +1,38 @@
+ALTER TABLE "tt_document_body" ADD COLUMN SERIAL_NUMBER_ID integer;
+
+COMMENT ON COLUMN "tt_document_body".SERIAL_NUMBER_ID IS '编号ID';
+
+
+
+CREATE TABLE "tt_task_record" (
+"id" integer AUTO_INCREMENT, -- id
+"process_instance_id" varchar NULL, -- 流程实例id
+"task_instance_id" varchar NULL, -- 任务实例id
+"task_title" varchar NULL, -- 任务标题
+"push_time" varchar NULL, -- 推送任务到统一待办的时间
+"event_type" varchar NULL, -- 事件类型
+"task_type" varchar NULL, -- 任务类型
+"task_content" text NULL, -- kafka中监听到的消息(json格式)
+"push_status" varchar NULL, -- 推送状态(0表示成功、1表示失败)
+"error_description" text NULL, -- 推送失败错误描述
+"task_state" varchar NULL, -- 任务状态
+"state" varchar NULL -- uniflow层面任务状态
+);
+
+CREATE UNIQUE INDEX inxex_tt_task_record_index_1 ON tt_task_record USING btree (id);
+COMMENT ON TABLE "tt_task_record" IS '推送任务记录表';
+
+-- Column comments
+
+COMMENT ON COLUMN "tt_task_record"."id" IS 'id';
+COMMENT ON COLUMN "tt_task_record"."process_instance_id" IS '流程实例id';
+COMMENT ON COLUMN "tt_task_record"."task_instance_id" IS '任务实例id';
+COMMENT ON COLUMN "tt_task_record"."task_title" IS '任务标题';
+COMMENT ON COLUMN "tt_task_record"."push_time" IS '推送任务到统一待办的时间';
+COMMENT ON COLUMN "tt_task_record"."event_type" IS '事件类型';
+COMMENT ON COLUMN "tt_task_record"."task_type" IS '任务类型';
+COMMENT ON COLUMN "tt_task_record"."task_content" IS 'kafka中监听到的消息(json格式)';
+COMMENT ON COLUMN "tt_task_record"."push_status" IS '推送状态(0表示成功、1表示失败)';
+COMMENT ON COLUMN "tt_task_record"."error_description" IS '推送失败错误描述';
+COMMENT ON COLUMN "tt_task_record"."task_state" IS '任务状态';
+COMMENT ON COLUMN "tt_task_record"."state" IS 'uniflow层面任务状态';
